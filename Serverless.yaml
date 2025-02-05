@@ -1,0 +1,33 @@
+service: aws-serverless-web-app
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  createTask:
+    handler: backend/index.createTaskHandler
+    events:
+      - http:
+          path: /tasks
+          method: post
+  updateTask:
+    handler: backend/index.updateTaskHandler
+    events:
+      - http:
+          path: /tasks/{taskId}
+          method: put
+  deleteTask:
+    handler: backend/index.deleteTaskHandler
+    events:
+      - http:
+          path: /tasks/{taskId}
+          method: delete
+  getTasks:
+    handler: backend/index.getTasksHandler
+    events:
+      - http:
+          path: /tasks
+          method: get
+
+

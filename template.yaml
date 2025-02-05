@@ -1,5 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+
 Resources:
   TasksTable:
     Type: AWS::DynamoDB::Table
@@ -18,7 +19,7 @@ Resources:
   CreateTaskFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
+      Handler: index.createTaskHandler
       Runtime: nodejs14.x
       CodeUri: .
       Events:
@@ -27,4 +28,43 @@ Resources:
           Properties:
             Path: /tasks
             Method: POST
+
+  UpdateTaskFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.updateTaskHandler
+      Runtime: nodejs14.x
+      CodeUri: .
+      Events:
+        UpdateTask:
+          Type: Api
+          Properties:
+            Path: /tasks/{taskId}
+            Method: PUT
+
+  DeleteTaskFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.deleteTaskHandler
+      Runtime: nodejs14.x
+      CodeUri: .
+      Events:
+        DeleteTask:
+          Type: Api
+          Properties:
+            Path: /tasks/{taskId}
+            Method: DELETE
+
+  GetTasksFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.getTasksHandler
+      Runtime: nodejs14.x
+      CodeUri: .
+      Events:
+        GetTasks:
+          Type: Api
+          Properties:
+            Path: /tasks
+            Method: GET
 
